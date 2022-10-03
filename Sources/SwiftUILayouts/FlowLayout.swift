@@ -133,6 +133,11 @@ public struct FlowLayout: Layout {
         })
         return result
     }
+    public static var layoutProperties: LayoutProperties {
+        var properties = LayoutProperties()
+        properties.stackOrientation = .horizontal
+        return properties
+    }
 }
 
 func +(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
