@@ -25,15 +25,15 @@ public struct CompressingHStack: Layout {
         guard !subviews.isEmpty else { return .zero }
 
         let maxSize = maxSize(subviews: subviews)
-        let sumWidth = subviews.reduce(into: Double.zero) { partialResult, subview in
-            partialResult += calcSize(for: subview, targetSize: maxSize).width
+        let sizes = subviews.map { subview in
+            calcSize(for: subview, targetSize: maxSize)
         }
         let spacing = spacing(subviews: subviews)
         let totalSpacing = spacing.reduce(0) { $0 + $1 }
 
         return CGSize(
-            width: sumWidth + totalSpacing,
-            height: maxSize.height)
+            width: sizes.map(\.width).reduce(into: .zero, { $0 += $1}) + totalSpacing,
+            height: sizes.map(\.height).max() ?? .zero)
     }
 
     /// Places the subviews in a horizontal stack.
